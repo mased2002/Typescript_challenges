@@ -12,7 +12,7 @@ let setStudentAgeApi = (student: { name: string; age?: number }, age: number): P
 }
 
 let student = { name: "denis" };
-setStudentAgeApi(student, -1)
+setStudentAgeApi(student, 3)
     .then(newStudent => {
         console.log("age set:", newStudent);
     })
