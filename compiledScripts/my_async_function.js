@@ -10,25 +10,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 function familyUpdate(families) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield new Promise((resolve, reject) => {
-            setTimeout(() => {
-                for (let family of families) {
-                    const totalMembers = family.childrenNumber + 2;
-                    family.totalNumberofFamilyMembers = totalMembers;
-                    // Check if father's name is Yves 
-                    if (family.fatherName && family.fatherName.toLowerCase() === 'yves') {
-                        reject(new Error('Yves is not an allowed dad in 2022'));
-                        return;
-                    }
-                }
-                resolve();
-            }, 1000);
-        });
+        const errors = [];
+        yield Promise.all(families.map((family) => __awaiter(this, void 0, void 0, function* () {
+            const totalMembers = family.childrenNumber + 2;
+            family.totalNumberofFamilyMembers = totalMembers;
+            // Check if father's name is Yves 
+            if (family.fatherName && family.fatherName.toLowerCase() === 'yves') {
+                errors.push(new Error('Yves is not an allowed dad in 2022'));
+            }
+        })));
+        if (errors.length > 0) {
+            throw new Error(errors.map(error => error.message).join('\n'));
+        }
     });
 }
 const families = [
     { fatherName: 'sa', motherName: 'Mary', childrenNumber: 2 },
-    { fatherName: 'yves', motherName: 'Julliet', childrenNumber: 1 },
+    { fatherName: 'kam', motherName: 'Julliet', childrenNumber: 1 },
     { fatherName: 'Peter', motherName: 'roxy', childrenNumber: 3 }
 ];
 familyUpdate(families)
